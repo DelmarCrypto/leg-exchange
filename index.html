@@ -707,12 +707,12 @@
     </div>
 </section>
 
-      <!DOCTYPE html>
+     <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <!-- [Méta-données et styles existants restent inchangés] -->
-    <!-- Ajout de styles pour les sections côte à côte -->
+    <!-- [Méta-données et styles existants inchangés] -->
     <style>
+        /* [Styles existants inchangés] */
         .swap-mint-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -745,16 +745,16 @@
     </style>
 </head>
 <body>
-    <!-- [Navbar et sections précédentes restent inchangées] -->
+    <!-- [Navbar et sections précédentes inchangées] -->
     <main>
         <div class="container">
-            <!-- [Sections précédentes restent inchangées] -->
+            <!-- [Sections précédentes inchangées] -->
 
-            <!-- Nouvelle section combinée pour échange et minting -->
+            <!-- Section combinée pour échange et minting -->
             <section class="section swap-mint" id="swap-mint-leg">
                 <h2>Interagir avec l’Écosystème Legatio</h2>
                 <div class="swap-mint-container">
-                    <!-- Section Échanger $LEGS (existante) -->
+                    <!-- Section Échanger $LEGS -->
                     <div class="swap-section">
                         <h3>Échanger vos $LEGS</h3>
                         <p>Échangez vos tokens $LEGS sur Uniswap une fois disponibles.</p>
@@ -762,7 +762,7 @@
                         <p class="swap-info">Disponible après le lancement de $LEGS sur Arbitrum.</p>
                     </div>
 
-                    <!-- Nouvelle section Minter des NFTs -->
+                    <!-- Section Minter des NFTs -->
                     <div class="mint-section">
                         <h3>Minter des NFTs Legatio</h3>
                         <p>Connectez-vous pour minter vos NFTs "Legatio Genesis" sur Arbitrum.</p>
@@ -772,58 +772,59 @@
                 </div>
             </section>
 
-            <!-- [Sections suivantes restent inchangées] -->
+            <!-- [Sections suivantes inchangées] -->
         </div>
     </main>
 
-    <!-- [Footer reste inchangé] -->
+    <!-- [Footer inchangé] -->
 
-    <!-- Ajout de la bibliothèque WalletConnect -->
-    <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+    <!-- Ajout des bibliothèques WalletConnect v2.x et Ethers.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/ethereum-provider@2.11.0/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@walletconnect/modal@2.6.2/dist/index.umd.js"></script>
     <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
     <script>
-        // [Scripts existants restent inchangés]
-
-        // Configuration WalletConnect
+        // Configuration WalletConnect v2.x
         async function connectWalletConnect() {
-            const provider = new WalletConnectProvider({
-                rpc: {
-                    42161: "https://arb1.arbitrum.io/rpc" // RPC pour Arbitrum Mainnet
-                },
-                chainId: 42161 // ID de la chaîne Arbitrum
-            });
-
             try {
-                // Activer la connexion
-                await provider.enable();
+                // Initialisation du provider WalletConnect
+                const provider = await EthereumProvider.init({
+                    projectId: "YOUR_PROJECT_ID", // Remplacez par votre Project ID de WalletConnect (obtenu sur walletconnect.com)
+                    chains: [42161], // Arbitrum Mainnet
+                    optionalChains: [42161],
+                    rpcMap: {
+                        42161: "https://arb1.arbitrum.io/rpc"
+                    },
+                    showQrModal: true, // Afficher le QR code pour la connexion
+                });
+
+                // Connexion
+                await provider.connect();
                 const web3Provider = new ethers.providers.Web3Provider(provider);
                 const signer = web3Provider.getSigner();
                 const address = await signer.getAddress();
 
-                // Mettre à jour le statut
+                // Mise à jour de l'interface
                 document.getElementById('walletconnect-status').textContent = `Connecté : ${address.slice(0, 6)}...${address.slice(-4)}`;
                 document.getElementById('walletconnect-button').textContent = 'Connecté';
                 document.getElementById('walletconnect-button').disabled = true;
 
-                // Écouter les déconnexions
+                // Gestion des événements de déconnexion
                 provider.on("disconnect", () => {
                     document.getElementById('walletconnect-status').textContent = "Non connecté";
                     document.getElementById('walletconnect-button').textContent = "Connexion via WalletConnect";
                     document.getElementById('walletconnect-button').disabled = false;
                 });
 
-                // Logique supplémentaire pour le minting pourrait être ajoutée ici
                 console.log("Connecté à WalletConnect avec l'adresse :", address);
             } catch (error) {
-                document.getElementById('walletconnect-status').textContent = "Erreur de connexion";
+                document.getElementById('walletconnect-status').textContent = "Erreur de connexion : " + (error.message || "Erreur inconnue");
                 console.error("Erreur WalletConnect :", error);
             }
         }
 
+        // Événements DOM
         document.addEventListener('DOMContentLoaded', () => {
-            // [Événements existants restent inchangés]
-            fetchLivePrices();
-            setInterval(fetchLivePrices, 60000);
+            // Ajouter ici d'autres initialisations si nécessaires (comme fetchLivePrices du code fonctionnel)
         });
     </script>
 </body>
