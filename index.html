@@ -707,83 +707,127 @@
     </div>
 </section>
 
-            <!DOCTYPE html>
+      <!DOCTYPE html>
 <html lang="fr">
 <head>
     <!-- [Méta-données et styles existants restent inchangés] -->
-    <!-- Ajout de styles spécifiques pour le simulateur -->
+    <!-- Ajout de styles pour les sections côte à côte -->
     <style>
-        .staking-simulator {
+        .swap-mint-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+        .swap-section, .mint-section {
             background: #1A1A1A;
-            padding: 2rem;
+            padding: 1.5rem;
             border-radius: 12px;
-            max-width: 800px;
-            margin: 2rem auto;
-        }
-        .staking-simulator h3 {
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        .staking-simulator label {
-            display: block;
-            margin: 0.5rem 0;
-        }
-        .staking-simulator input, .staking-simulator select {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            border-radius: 8px;
-            background: #2A2A2A;
-            color: var(--text);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .staking-result {
-            margin-top: 1rem;
             text-align: center;
         }
-        #staking-chart {
-            max-width: 400px;
-            margin: 1rem auto;
+        .walletconnect-button {
+            background: var(--button-bg);
+            color: var(--button-text);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .walletconnect-button:hover {
+            background: var(--hover-dark);
+            box-shadow: var(--glow);
+        }
+        #walletconnect-status {
+            margin-top: 1rem;
+            color: var(--accent-pink);
         }
     </style>
 </head>
 <body>
-    <!-- [Navbar et sections existantes restent inchangées] -->
+    <!-- [Navbar et sections précédentes restent inchangées] -->
     <main>
         <div class="container">
             <!-- [Sections précédentes restent inchangées] -->
 
-            <!-- Nouvelle section pour le simulateur -->
-            <section class="section staking-simulator" id="simulateur-rwa">
-                <h2>Simulateur de Staking</h2>
-                <p>Calculez vos rendements potentiels avec les $LEGS et NFTs Legatio.</p>
-                <div class="staking-simulator">
-                    <h3>Paramètres</h3>
-                    <label for="leg-amount">Nombre de $LEGS à staker :</label>
-                    <input type="number" id="leg-amount" min="0" step="100" value="1000" aria-label="Nombre de $LEGS à staker">
-
-                    <label for="nft-count">Nombre de NFTs Legatio détenus :</label>
-                    <input type="number" id="nft-count" min="0" max="10000" value="0" aria-label="Nombre de NFTs Legatio">
-
-                    <label for="staking-duration">Durée de staking (mois) :</label>
-                    <input type="number" id="staking-duration" min="1" max="36" value="12" aria-label="Durée de staking en mois">
-
-                    <button class="cta-button" onclick="calculateStakingRewards()">Calculer</button>
-
-                    <div class="staking-result" id="staking-result">
-                        <p>Rendement estimé : <span id="estimated-reward">0</span> $LEGS</p>
-                        <p>Bonus NFT : <span id="nft-bonus">0</span> $LEGS</p>
-                        <p>Total : <span id="total-reward">0</span> $LEGS</p>
+            <!-- Nouvelle section combinée pour échange et minting -->
+            <section class="section swap-mint" id="swap-mint-leg">
+                <h2>Interagir avec l’Écosystème Legatio</h2>
+                <div class="swap-mint-container">
+                    <!-- Section Échanger $LEGS (existante) -->
+                    <div class="swap-section">
+                        <h3>Échanger vos $LEGS</h3>
+                        <p>Échangez vos tokens $LEGS sur Uniswap une fois disponibles.</p>
+                        <a href="https://app.uniswap.org/" class="cta-button" target="_blank" rel="noopener noreferrer">Échanger sur Uniswap</a>
+                        <p class="swap-info">Disponible après le lancement de $LEGS sur Arbitrum.</p>
                     </div>
-                    <canvas id="staking-chart"></canvas>
+
+                    <!-- Nouvelle section Minter des NFTs -->
+                    <div class="mint-section">
+                        <h3>Minter des NFTs Legatio</h3>
+                        <p>Connectez-vous pour minter vos NFTs "Legatio Genesis" sur Arbitrum.</p>
+                        <button id="walletconnect-button" class="walletconnect-button" onclick="connectWalletConnect()">Connexion via WalletConnect</button>
+                        <p id="walletconnect-status" class="swap-info">Non connecté</p>
+                    </div>
                 </div>
             </section>
 
-            <!-- [Autres sections restent inchangées] -->
+            <!-- [Sections suivantes restent inchangées] -->
         </div>
     </main>
 
     <!-- [Footer reste inchangé] -->
+
+    <!-- Ajout de la bibliothèque WalletConnect -->
+    <script src="https://unpkg.com/@walletconnect/web3-provider@1.8.0/dist/umd/index.min.js"></script>
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+    <script>
+        // [Scripts existants restent inchangés]
+
+        // Configuration WalletConnect
+        async function connectWalletConnect() {
+            const provider = new WalletConnectProvider({
+                rpc: {
+                    42161: "https://arb1.arbitrum.io/rpc" // RPC pour Arbitrum Mainnet
+                },
+                chainId: 42161 // ID de la chaîne Arbitrum
+            });
+
+            try {
+                // Activer la connexion
+                await provider.enable();
+                const web3Provider = new ethers.providers.Web3Provider(provider);
+                const signer = web3Provider.getSigner();
+                const address = await signer.getAddress();
+
+                // Mettre à jour le statut
+                document.getElementById('walletconnect-status').textContent = `Connecté : ${address.slice(0, 6)}...${address.slice(-4)}`;
+                document.getElementById('walletconnect-button').textContent = 'Connecté';
+                document.getElementById('walletconnect-button').disabled = true;
+
+                // Écouter les déconnexions
+                provider.on("disconnect", () => {
+                    document.getElementById('walletconnect-status').textContent = "Non connecté";
+                    document.getElementById('walletconnect-button').textContent = "Connexion via WalletConnect";
+                    document.getElementById('walletconnect-button').disabled = false;
+                });
+
+                // Logique supplémentaire pour le minting pourrait être ajoutée ici
+                console.log("Connecté à WalletConnect avec l'adresse :", address);
+            } catch (error) {
+                document.getElementById('walletconnect-status').textContent = "Erreur de connexion";
+                console.error("Erreur WalletConnect :", error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // [Événements existants restent inchangés]
+            fetchLivePrices();
+            setInterval(fetchLivePrices, 60000);
+        });
+    </script>
+</body>
+</html>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
