@@ -868,7 +868,7 @@
                 <p id="silverPrice">Argent: Chargement...</p>
             </section>
 
-    <section class="section" id="Simulateur-rwa">
+<section class="section" id="Simulateur-rwa">
     <h2>Simulateur d'Engagement</h2>
     <p>Estimez vos récompenses avec $LEGS et NFTs. <a href="#how-to-invest">En savoir plus sur les récompenses</a>.</p>
     <form class="simulator-form">
@@ -878,32 +878,32 @@
             <div class="step-indicator" id="step-3-indicator">3</div>
         </div>
 
-        <!-- Étape 1 : Connexion et sélection du collatéral -->
+        <!-- Étape 1 : Connexion et sélection de l'actif -->
         <div class="step active" id="step-1">
             <button type="button" id="connect-metamask" class="cta-button">Connecter MetaMask <span id="loading-spinner" class="hidden">⏳</span></button>
             <p id="wallet-address" class="hidden">Adresse connectée : Aucune</p>
             <p id="error-message" class="hidden" style="color: #e74c3c;"></p>
-            <label for="collateral-type">Type de Collatéral :</label>
-            <select id="collateral-type" aria-label="Type de collatéral">
+            <label for="collateral-type">Type d'Actif :</label>
+            <select id="collateral-type" aria-label="Type d'actif">
                 <option value="nft-leg">NFT Leg</option>
                 <option value="token-leg">Token Leg</option>
             </select>
             <button type="button" class="cta-button" onclick="nextStep(2)">Suivant</button>
         </div>
 
-        <!-- Étape 2 : Détails du prêt -->
+        <!-- Étape 2 : Détails de l'engagement -->
         <div class="step" id="step-2">
-            <label for="collateral-amount">Valeur du Collatéral (unités) :</label>
+            <label for="collateral-amount">Quantité d'Actifs (unités) :</label>
             <input type="range" id="collateral-amount" min="0" max="100" step="0.01" value="0" oninput="updateCollateralValue(this.value)">
             <span id="collateral-amount-display">0</span>
-            <p>Prix actuel : <span id="collateral-price">$0</span></p>
-            <label for="loan-duration">Durée du Prêt (mois) :</label>
+            <p>Valeur actuelle : <span id="collateral-price">$0</span></p>
+            <label for="loan-duration">Durée d'Engagement (mois) :</label>
             <input type="range" id="loan-duration" min="1" max="36" step="1" value="12" oninput="updateLoanDuration(this.value)">
             <span id="loan-duration-display">12</span>
-            <label for="interest-rate">Taux d’Intérêt Annuel (%) : <span class="tooltip">ℹ️ Taux d’intérêt appliqué sur le prêt.</span></label>
+            <label for="interest-rate">Taux de Récompense Annuel (%) : <span class="tooltip">ℹ️ Taux de récompense annuel pour votre engagement.</span></label>
             <input type="range" id="interest-rate" min="0" max="20" step="0.1" value="5" oninput="updateInterestRate(this.value)">
             <span id="interest-rate-display">5%</span>
-            <p>Ratio LTV : <span id="ltv-value" class="highlight">0%</span> <span class="tooltip">ℹ️ Le ratio LTV (Loan-to-Value) indique le pourcentage de la valeur de votre collatéral que vous empruntez.</span></p>
+            <p>Ratio Engagement/Valeur : <span id="ltv-value" class="highlight">0%</span> <span class="tooltip">ℹ️ Le ratio indique la proportion de votre actif engagé pour générer des récompenses.</span></p>
             <button type="button" class="cta-button" onclick="nextStep(1)">Précédent</button>
             <button type="button" class="cta-button" onclick="nextStep(3)">Suivant</button>
         </div>
@@ -911,14 +911,13 @@
         <!-- Étape 3 : Résultats -->
         <div class="step" id="step-3">
             <div id="loan-results" role="region" aria-live="polite">
-                <p><strong>Montant du prêt :</strong> <span id="loan-amount">$0</span></p>
-                <p><strong>Mensuel :</strong> <span id="monthly-payment">$0</span></p>
-                <p><strong>Intérêts :</strong> <span id="total-interest">$0</span></p>
-                <p><strong>Total :</strong> <span id="total-amount">$0</span></p>
+                <p><strong>Récompenses mensuelles :</strong> <span id="monthly-payment">$0</span></p>
+                <p><strong>Récompenses totales :</strong> <span id="total-amount">$0</span></p>
+                <p><strong>Bonus d'engagement :</strong> <span id="total-interest">$0</span></p>
                 <canvas id="loan-chart" style="max-height: 200px;"></canvas>
             </div>
             <button type="button" class="cta-button" onclick="nextStep(2)">Précédent</button>
-            <button type="button" onclick="requestLoan()" class="cta-button" id="loan-request-btn">Demander un prêt</button>
+            <button type="button" onclick="requestLoan()" class="cta-button" id="loan-request-btn">Participer</button>
             <button type="button" onclick="resetSimulator()" class="cta-button">Réinitialiser</button>
         </div>
     </form>
