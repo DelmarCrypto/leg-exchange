@@ -538,7 +538,7 @@
     </header>
 
     <main>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <!-- [Méta-données et styles existants inchangés] -->
@@ -558,15 +558,22 @@
             <section class="section start-section">
                 <h2>Bienvenue chez Legatio</h2>
                 <p>Une plateforme innovante pour explorer des NFTs uniques et obtenir des $LEGS via staking ou participation active.</p>
-                <!-- Bouton "Essayer le Simulateur" reste actif -->
                 <a href="#simulateur-rwa" class="cta-button simulator-cta" aria-label="Essayer le simulateur">Essayer le Simulateur</a>
             </section>
 
             <!-- [Section token-benefits inchangée] -->
 
-            <!-- Section modifiée avec bouton MetaMask -->
+            <!-- Nouvelle section "Formez-vous" placée avant "Comment Participer ?" -->
+            <section class="section training-section" id="training">
+                <h2>Formez-vous</h2>
+                <p>Avant d’investir dans les NFTs et le token $LEG, découvrez notre formation pour maîtriser l’écosystème Legatio et la blockchain.</p>
+                <a href="https://delmarcrypto.github.io/Formation-Legatio/" class="cta-button simulator-cta" target="_blank" rel="noopener noreferrer" aria-label="Découvrez notre formation">Découvrez Notre Formation</a>
+            </section>
+
+            <!-- Section "Comment Participer ?" après "Formez-vous" -->
             <section class="section how-to-invest" id="how-to-invest">
                 <h2>Comment Participer ?</h2>
+                <p>Une fois formé, voici les étapes pour investir dans les NFTs et $LEGS de Legatio :</p>
                 <div class="token-benefits-list">
                     <article class="token-benefit">
                         <i class="fas fa-wallet"></i>
@@ -615,7 +622,6 @@
                 provider = new ethers.providers.Web3Provider(window.ethereum);
                 signer = provider.getSigner();
 
-                // Vérification et commutation vers Arbitrum
                 if (await window.ethereum.request({ method: 'eth_chainId' }) !== '0xa4b1') {
                     try {
                         await window.ethereum.request({
