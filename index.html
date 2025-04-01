@@ -707,6 +707,152 @@
     </div>
 </section>
 
+            <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- [Méta-données et styles existants restent inchangés] -->
+    <!-- Ajout de styles spécifiques pour le simulateur -->
+    <style>
+        .staking-simulator {
+            background: #1A1A1A;
+            padding: 2rem;
+            border-radius: 12px;
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+        .staking-simulator h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        .staking-simulator label {
+            display: block;
+            margin: 0.5rem 0;
+        }
+        .staking-simulator input, .staking-simulator select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background: #2A2A2A;
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .staking-result {
+            margin-top: 1rem;
+            text-align: center;
+        }
+        #staking-chart {
+            max-width: 400px;
+            margin: 1rem auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- [Navbar et sections existantes restent inchangées] -->
+    <main>
+        <div class="container">
+            <!-- [Sections précédentes restent inchangées] -->
+
+            <!-- Nouvelle section pour le simulateur -->
+            <section class="section staking-simulator" id="simulateur-rwa">
+                <h2>Simulateur de Staking</h2>
+                <p>Calculez vos rendements potentiels avec les $LEGS et NFTs Legatio.</p>
+                <div class="staking-simulator">
+                    <h3>Paramètres</h3>
+                    <label for="leg-amount">Nombre de $LEGS à staker :</label>
+                    <input type="number" id="leg-amount" min="0" step="100" value="1000" aria-label="Nombre de $LEGS à staker">
+
+                    <label for="nft-count">Nombre de NFTs Legatio détenus :</label>
+                    <input type="number" id="nft-count" min="0" max="10000" value="0" aria-label="Nombre de NFTs Legatio">
+
+                    <label for="staking-duration">Durée de staking (mois) :</label>
+                    <input type="number" id="staking-duration" min="1" max="36" value="12" aria-label="Durée de staking en mois">
+
+                    <button class="cta-button" onclick="calculateStakingRewards()">Calculer</button>
+
+                    <div class="staking-result" id="staking-result">
+                        <p>Rendement estimé : <span id="estimated-reward">0</span> $LEGS</p>
+                        <p>Bonus NFT : <span id="nft-bonus">0</span> $LEGS</p>
+                        <p>Total : <span id="total-reward">0</span> $LEGS</p>
+                    </div>
+                    <canvas id="staking-chart"></canvas>
+                </div>
+            </section>
+
+            <!-- [Autres sections restent inchangées] -->
+        </div>
+    </main>
+
+    <!-- [Footer reste inchangé] -->
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let stakingChart;
+
+        function calculateStakingRewards() {
+            // Récupération des valeurs saisies
+            const legAmount = parseFloat(document.getElementById('leg-amount').value) || 0;
+            const nftCount = parseInt(document.getElementById('nft-count').value) || 0;
+            const stakingDuration = parseInt(document.getElementById('staking-duration').value) || 1;
+
+            // Hypothèses basées sur le White Paper (à ajuster selon les données réelles)
+            const baseStakingRate = 0.10; // 10% de rendement annuel pour $LEG
+            const nftBonusRate = 0.02; // 2% de bonus annuel par NFT détenu
+            const maxSupply = 1000000000; // 1 milliard de $LEGS (total supply)
+            const burnRate = 0.01; // 1% burn par transfert (non appliqué ici directement)
+
+            // Calcul du rendement de base pour les $LEGS stakés
+            const annualReward = legAmount * baseStakingRate;
+            const monthlyReward = annualReward / 12;
+            const stakingReward = monthlyReward * stakingDuration;
+
+            // Calcul du bonus NFT
+            const nftBonus = legAmount * nftBonusRate * nftCount * (stakingDuration / 12);
+            const totalReward = stakingReward + nftBonus;
+
+            // Mise à jour de l'affichage
+            document.getElementById('estimated-reward').textContent = stakingReward.toFixed(2);
+            document.getElementById('nft-bonus').textContent = nftBonus.toFixed(2);
+            document.getElementById('total-reward').textContent = totalReward.toFixed(2);
+
+            // Mise à jour du graphique
+            if (stakingChart) stakingChart.destroy();
+            const ctx = document.getElementById('staking-chart').getContext('2d');
+            stakingChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Rendement de base', 'Bonus NFT'],
+                    datasets: [{
+                        data: [stakingReward, nftBonus],
+                        backgroundColor: ['#FF007A', '#FF66B2'],
+                        borderColor: ['#1A1A1A', '#1A1A1A'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: { color: '#FFFFFF' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Ajout des événements existants
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchLivePrices();
+            setInterval(fetchLivePrices, 60000);
+
+            document.getElementById('connect-metamask')?.addEventListener('click', connectMetaMask);
+            // [Autres événements existants restent inchangés]
+        });
+    </script>
+</body>
+</html>
+
    <section class="section swap" id="swap-leg">
     <h2>Échangez vos $LEGS</h2>
     <div style="text-align: center;">
