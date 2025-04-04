@@ -19,9 +19,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="main.css">
-    <!-- Ajout de Chart.js pour le graphique -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- Données structurées (Schema Markup) -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js" defer></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -115,7 +114,6 @@
             outline: none;
         }
 
-        /* Style pour le texte "Legatio Finance" dans la navbar */
         .navbar .logo-text {
             font-size: 1.8rem;
             font-weight: 700;
@@ -169,6 +167,8 @@
             border-radius: 25px;
             font-weight: 500;
             transition: all 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
         .cta-button:hover,
@@ -311,25 +311,11 @@
             box-shadow: var(--glow);
         }
 
-        .simulator-form .tooltip {
-            cursor: help;
-            color: var(--accent-pink);
-            margin-left: 5px;
-        }
-
         .simulator-form .highlight {
             display: inline-block;
             padding: 0.2rem 0.5rem;
             border-radius: 5px;
             font-weight: 500;
-        }
-
-        .simulator-form .highlight.success {
-            background: var(--success);
-        }
-
-        .simulator-form .highlight.warning {
-            background: var(--warning);
         }
 
         .progress-bar {
@@ -449,21 +435,19 @@
             transform: scale(1.1);
         }
 
-        /* Centrage de la phrase dans la section start-section */
         .start-section p {
             text-align: center;
             margin: 0 auto;
-            max-width: 800px; /* Limite la largeur pour une meilleure lisibilité */
+            max-width: 800px;
         }
 
-        /* Suppression des puces blanches dans la section Token LEG */
         .token-sale-item ul {
-            list-style: none; /* Supprime les puces */
-            padding-left: 0; /* Supprime l'indentation par défaut */
+            list-style: none;
+            padding-left: 0;
         }
 
         .token-sale-item ul li {
-            margin-bottom: 0.5rem; /* Ajoute un espacement entre les éléments */
+            margin-bottom: 0.5rem;
         }
 
         @media (max-width: 768px) {
@@ -488,7 +472,7 @@
             }
 
             .navbar .logo-text {
-                font-size: 1.5rem; /* Réduit la taille sur mobile */
+                font-size: 1.5rem;
             }
 
             .header-content h1 {
@@ -509,7 +493,6 @@
                 padding: 0.8rem;
             }
 
-            /* Ajustement du texte sur mobile */
             .start-section p {
                 max-width: 100%;
                 padding: 0 1rem;
@@ -539,16 +522,16 @@
 
     <main>
         <section class="header" id="start">
-    <div class="header-content">
-        <h1>Legatio Finance</h1>
-        <p class="catchphrase">Une plateforme innovante pour explorer des NFTs uniques et obtenir des $LEGS via staking.</p>
-    </div>
-</section>
+            <div class="header-content">
+                <h1>Legatio Finance</h1>
+                <p class="catchphrase">Une plateforme innovante pour explorer des NFTs uniques et obtenir des $LEGS via staking.</p>
+            </div>
+        </section>
 
-         <div class="container">
+        <div class="container">
             <section class="section start-section">
                 <h2>Bienvenue dans notre écosystème</h2>
-                    <p>Avant d’investir dans nos NFTs et le token $LEG, formez-vous pour mieux comprendre la blockchain et maximiser vos opportunités.</p>
+                <p>Avant d’investir dans nos NFTs et le token $LEG, formez-vous pour mieux comprendre la blockchain et maximiser vos opportunités.</p>
                 <a href="https://delmarcrypto.github.io/Formation-Legatio/" class="cta-button simulator-cta" target="_blank" rel="noopener noreferrer" aria-label="Découvrez notre formation">Voir Notre Formation</a>
             </section>
 
@@ -624,10 +607,9 @@
                         <i class="fas fa-wallet"></i>
                         <h3>1. Connectez</h3>
                         <p>Utilisez MetaMask sur Arbitrum.</p>
-                        <button id="connect-metamask-howto" class="cta-button" onclick="connectMetaMask()">Connexion MetaMask</button>
+                        <button id="connect-metamask-howto" class="cta-button">Connexion MetaMask</button>
                         <p id="wallet-address-howto" class="hidden">Adresse connectée : Aucune</p>
                         <p id="error-message-howto" class="hidden" style="color: #e74c3c;"></p>
-                    </article>
                     </article>
                     <article class="token-benefit">
                         <i class="fas fa-building"></i>
@@ -678,8 +660,8 @@
                     </article>
                     <article class="token-sale-item">
                         <h3>NFTs Legatio</h3>
-                        <p><strong>"Legatio Genesis".</p>
-                        <p></strong>  10 000 NFTs uniques sur Arbitrum.</p>
+                        <p><strong>"Legatio Genesis".</strong></p>
+                        <p>10 000 NFTs uniques sur Arbitrum.</p>
                         <p>Prix : Dès 0.05 ETH</p>
                         <p>Bonus : $LEGS supplémentaires.</p>
                     </article>
@@ -687,35 +669,35 @@
             </section>
 
             <section class="section price-history" id="price-history">
-    <h2>Historique des Prix</h2>
-    <p>Découvrez les prix du token $LEGS et des NFTs Legatio au lancement et à la fin de la levée de fonds.</p>
-    <div class="token-sale-container">
-        <article class="token-sale-item">
-            <h3>Prix du Token $LEGS</h3>
-            <ul>
-                <li><strong>Au Lancement (Q1 2025) :</strong> 0.01 $</li>
-                <li><strong>Fin de la Levée de Fonds (Q2 2025) :</strong> 0.05 $</li>
-            </ul>
-            <p><em>*Valeurs estimées, ajustées selon la demande et les tokenomics.</em></p>
-        </article>
-        <article class="token-sale-item">
-            <h3>Prix des NFTs Legatio</h3>
-            <ul>
-                <li><strong>Au Lancement (Q1 2025) :</strong> 0.05 ETH (environ 100 $)</li>
-                <li><strong>Fin de la Levée de Fonds (Q2 2025) :</strong> 0.08 ETH (environ 160 $)</li>
-            </ul>
-            <p><em>*Prix basé sur une collection "Legatio Genesis" de 10 000 NFTs.</em></p>
-        </article>
-    </div>
-</section>
+                <h2>Historique des Prix</h2>
+                <p>Découvrez les prix du token $LEGS et des NFTs Legatio au lancement et à la fin de la levée de fonds.</p>
+                <div class="token-sale-container">
+                    <article class="token-sale-item">
+                        <h3>Prix du Token $LEGS</h3>
+                        <ul>
+                            <li><strong>Au Lancement (Q1 2025) :</strong> 0.01 $</li>
+                            <li><strong>Fin de la Levée de Fonds (Q2 2025) :</strong> 0.05 $</li>
+                        </ul>
+                        <p><em>*Valeurs estimées, ajustées selon la demande et les tokenomics.</em></p>
+                    </article>
+                    <article class="token-sale-item">
+                        <h3>Prix des NFTs Legatio</h3>
+                        <ul>
+                            <li><strong>Au Lancement (Q1 2025) :</strong> 0.05 ETH (environ 100 $)</li>
+                            <li><strong>Fin de la Levée de Fonds (Q2 2025) :</strong> 0.08 ETH (environ 160 $)</li>
+                        </ul>
+                        <p><em>*Prix basé sur une collection "Legatio Genesis" de 10 000 NFTs.</em></p>
+                    </article>
+                </div>
+            </section>
 
-   <section class="section swap" id="swap-leg">
-    <h2>Échangez vos $LEGS</h2>
-    <div style="text-align: center;">
-        <a href="https://app.uniswap.org/" class="cta-button" target="_blank" rel="noopener noreferrer">Échanger sur Uniswap</a>
-        <p class="swap-info">Disponible après le lancement de $LEGS sur Arbitrum.</p>
-    </div>
-</section>
+            <section class="section swap" id="swap-leg">
+                <h2>Échangez vos $LEGS</h2>
+                <div style="text-align: center;">
+                    <a href="https://app.uniswap.org/" class="cta-button" target="_blank" rel="noopener noreferrer">Échanger sur Uniswap</a>
+                    <p class="swap-info">Disponible après le lancement de $LEGS sur Arbitrum.</p>
+                </div>
+            </section>
 
             <section class="section testimonials">
                 <h2>Ce que Nos Membres Disent</h2>
@@ -772,25 +754,23 @@
                 </div>
             </section>
 
-           <section class="section partner-logos">
-    <h2>Nos partenaires</h2>
-    <div class="partner-logos-grid">
-        <!-- LBank -->
-        <a href="https://www.lbank.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo LBank">
-            <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
-                <title>Logo de LBank, partenaire de Legatio Finance</title>
-                <defs>
-                    <linearGradient id="lbankGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color: var(--primary);" />
-                        <stop offset="100%" style="stop-color: var(--accent-pink);" />
-                    </linearGradient>
-                </defs>
-                <rect x="5" y="5" width="110" height="40" rx="10" fill="none" stroke="url(#lbankGradient)" stroke-width="2"/>
-                <text x="15" y="35" font-family="Orbitron, sans-serif" font-size="20" fill="url(#lbankGradient)">LBank</text>
-                <circle cx="100" cy="25" r="5" fill="var(--primary)"/>
-            </svg>
-        </a>
-        <!-- Link -->
+            <section class="section partner-logos">
+                <h2>Nos partenaires</h2>
+                <div class="partner-logos-grid">
+                    <a href="https://www.lbank.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo LBank">
+                        <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
+                            <title>Logo de LBank, partenaire de Legatio Finance</title>
+                            <defs>
+                                <linearGradient id="lbankGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color: var(--primary);" />
+                                    <stop offset="100%" style="stop-color: var(--accent-pink);" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="5" y="5" width="110" height="40" rx="10" fill="none" stroke="url(#lbankGradient)" stroke-width="2"/>
+                            <text x="15" y="35" font-family="Orbitron, sans-serif" font-size="20" fill="url(#lbankGradient)">LBank</text>
+                            <circle cx="100" cy="25" r="5" fill="var(--primary)"/>
+                        </svg>
+                    </a>
                     <a href="https://chain.link/" target="_blank" rel="noopener noreferrer" aria-label="Logo Link">
                         <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
                             <title>Logo de Link, partenaire de Legatio Finance</title>
@@ -804,131 +784,124 @@
                             <text x="65" y="35" font-family="Orbitron, sans-serif" font-size="18" fill="url(#chainlinkGradient)">Link</text>
                         </svg>
                     </a>
-        <!-- Axie Infinity (remplace RealT) -->
-        <a href="https://axieinfinity.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo Axie Infinity">
-            <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
-                <title>Logo de Axie Infinity, partenaire de Legatio Finance</title>
-                <defs>
-                    <linearGradient id="axieGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color: var(--primary);" />
-                        <stop offset="100%" style="stop-color: var(--accent-pink);" />
-                    </linearGradient>
-                </defs>
-                <rect x="10" y="10" width="40" height="30" fill="none" stroke="url(#axieGradient)" stroke-width="2"/>
-                <text x="60" y="35" font-family="Orbitron, sans-serif" font-size="18" fill="url(#axieGradient)">Axie</text>
-            </svg>
-        </a>
-        <!-- Aave -->
-        <a href="https://aave.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo Aave">
-            <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
-                <title>Logo de Aave, partenaire de Legatio Finance</title>
-                <defs>
-                    <linearGradient id="aaveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color: var(--primary);" />
-                        <stop offset="100%" style="stop-color: var(--accent-pink);" />
-                    </linearGradient>
-                </defs>
-                <circle cx="30" cy="25" r="15" fill="none" stroke="url(#aaveGradient)" stroke-width="3"/>
-                <text x="55" y="35" font-family="Orbitron, sans-serif" font-size="18" fill="url(#aaveGradient)">Aave</text>
-            </svg>
-        </a>
-        <!-- Rarible -->
-        <a href="https://rarible.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo Rarible">
-            <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
-                <title>Logo de Rarible, partenaire de Legatio Finance</title>
-                <defs>
-                    <linearGradient id="raribleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color: var(--primary);" />
-                        <stop offset="100%" style="stop-color: var(--accent-pink);" />
-                    </linearGradient>
-                </defs>
-                <path d="M20 15 L30 35 L40 15 Z" fill="none" stroke="url(#raribleGradient)" stroke-width="3"/>
-                <text x="50" y="35" font-family="Orbitron, sans-serif" font-size="16" fill="url(#raribleGradient)">Rarible</text>
-            </svg>
-        </a>
-        <!-- Stepn (remplace Ledger) -->
-        <a href="https://www.stepn.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo Stepn">
-            <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
-                <title>Logo de Stepn, partenaire de Legatio Finance</title>
-                <defs>
-                    <linearGradient id="stepnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color: var(--primary);" />
-                        <stop offset="100%" style="stop-color: var(--accent-pink);" />
-                    </linearGradient>
-                </defs>
-                <rect x="15" y="15" width="30" height="20" fill="none" stroke="url(#stepnGradient)" stroke-width="2"/>
-                <text x="55" y="35" font-family="Orbitron, sans-serif" font-size="16" fill="url(#stepnGradient)">Stepn</text>
-            </svg>
-        </a>
-    </div>
-</section>
+                    <a href="https://axieinfinity.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo Axie Infinity">
+                        <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
+                            <title>Logo de Axie Infinity, partenaire de Legatio Finance</title>
+                            <defs>
+                                <linearGradient id="axieGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color: var(--primary);" />
+                                    <stop offset="100%" style="stop-color: var(--accent-pink);" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="10" y="10" width="40" height="30" fill="none" stroke="url(#axieGradient)" stroke-width="2"/>
+                            <text x="60" y="35" font-family="Orbitron, sans-serif" font-size="18" fill="url(#axieGradient)">Axie</text>
+                        </svg>
+                    </a>
+                    <a href="https://aave.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo Aave">
+                        <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
+                            <title>Logo de Aave, partenaire de Legatio Finance</title>
+                            <defs>
+                                <linearGradient id="aaveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color: var(--primary);" />
+                                    <stop offset="100%" style="stop-color: var(--accent-pink);" />
+                                </linearGradient>
+                            </defs>
+                            <circle cx="30" cy="25" r="15" fill="none" stroke="url(#aaveGradient)" stroke-width="3"/>
+                            <text x="55" y="35" font-family="Orbitron, sans-serif" font-size="18" fill="url(#aaveGradient)">Aave</text>
+                        </svg>
+                    </a>
+                    <a href="https://rarible.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo Rarible">
+                        <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
+                            <title>Logo de Rarible, partenaire de Legatio Finance</title>
+                            <defs>
+                                <linearGradient id="raribleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color: var(--primary);" />
+                                    <stop offset="100%" style="stop-color: var(--accent-pink);" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M20 15 L30 35 L40 15 Z" fill="none" stroke="url(#raribleGradient)" stroke-width="3"/>
+                            <text x="50" y="35" font-family="Orbitron, sans-serif" font-size="16" fill="url(#raribleGradient)">Rarible</text>
+                        </svg>
+                    </a>
+                    <a href="https://www.stepn.com/" target="_blank" rel="noopener noreferrer" aria-label="Logo Stepn">
+                        <svg width="120" height="50" xmlns="http://www.w3.org/2000/svg" class="partner-logo">
+                            <title>Logo de Stepn, partenaire de Legatio Finance</title>
+                            <defs>
+                                <linearGradient id="stepnGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color: var(--primary);" />
+                                    <stop offset="100%" style="stop-color: var(--accent-pink);" />
+                                </linearGradient>
+                            </defs>
+                            <rect x="15" y="15" width="30" height="20" fill="none" stroke="url(#stepnGradient)" stroke-width="2"/>
+                            <text x="55" y="35" font-family="Orbitron, sans-serif" font-size="16" fill="url(#stepnGradient)">Stepn</text>
+                        </svg>
+                    </a>
+                </div>
+            </section>
 
             <section class="section crypto-prices" style="text-align: center; padding: 1.5rem; background: #1A1A1A; border-radius: 12px;">
                 <h2>Prix en Direct</h2>
-                <p id="btcPrice">Bitcoin: Chargement...</p>
-                <p id="goldPrice">Or: Chargement...</p>
-                <p id="silverPrice">Argent: Chargement...</p>
+                <p id="btcPrice">Bitcoin: $85,000 (fixe)</p>
+                <p id="goldPrice">Or: $2,600 (fixe)</p>
+                <p id="silverPrice">Argent: Non disponible</p>
             </section>
 
-           <section class="section" id="Simulateur-rwa">
-    <h2>Simulateur d'Engagement</h2>
-    <p>Estimez vos prêts ou récompenses avec des collatéraux institutionnels.</p>
-    <form class="simulator-form">
-        <div class="progress-bar">
-            <div class="step-indicator active" id="step-1-indicator">1</div>
-            <div class="step-indicator" id="step-2-indicator">2</div>
-            <div class="step-indicator" id="step-3-indicator">3</div>
-        </div>
+            <section class="section" id="Simulateur-rwa">
+                <h2>Simulateur d'Engagement</h2>
+                <p>Estimez vos prêts ou récompenses avec des collatéraux institutionnels.</p>
+                <form class="simulator-form">
+                    <div class="progress-bar">
+                        <div class="step-indicator active" id="step-1-indicator">1</div>
+                        <div class="step-indicator" id="step-2-indicator">2</div>
+                        <div class="step-indicator" id="step-3-indicator">3</div>
+                    </div>
 
-        <!-- Étape 1 : Connexion et sélection -->
-        <div class="step active" id="step-1">
-            <button type="button" id="connect-metamask" class="cta-button">Connecter MetaMask</button>
-            <p id="wallet-address" class="hidden">Adresse connectée : Aucune</p>
-            <p id="error-message" class="hidden" style="color: #e74c3c;"></p>
-            <label for="collateral-type">Type de Collatéral :</label>
-            <select id="collateral-type" aria-label="Type de collatéral">
-                <option value="wbtc">Wrapped Bitcoin (WBTC)</option>
-                <option value="eth">Ethereum (ETH)</option>
-                <option value="usdc">USDC (Stablecoin)</option>
-                <option value="paxg">PAX Gold (PAXG)</option>
-                <option value="rwa">Obligations Tokenisées (RWA)</option>
-            </select>
-            <button type="button" class="cta-button" onclick="nextStep(2)">Suivant</button>
-        </div>
+                    <div class="step active" id="step-1">
+                        <button type="button" id="connect-metamask" class="cta-button">Connecter MetaMask</button>
+                        <p id="wallet-address" class="hidden">Adresse connectée : Aucune</p>
+                        <p id="error-message" class="hidden" style="color: #e74c3c;"></p>
+                        <label for="collateral-type">Type de Collatéral :</label>
+                        <select id="collateral-type" aria-label="Type de collatéral">
+                            <option value="wbtc">Wrapped Bitcoin (WBTC)</option>
+                            <option value="eth">Ethereum (ETH)</option>
+                            <option value="usdc">USDC (Stablecoin)</option>
+                            <option value="paxg">PAX Gold (PAXG)</option>
+                            <option value="rwa">Obligations Tokenisées (RWA)</option>
+                        </select>
+                        <button type="button" class="cta-button" onclick="nextStep(2)">Suivant</button>
+                    </div>
 
-        <!-- Étape 2 : Détails -->
-        <div class="step" id="step-2">
-            <p>Type sélectionné : <span id="selected-collateral">WBTC</span> (Prix unitaire : <span id="collateral-unit-price">$85,000</span>)</p>
-            <label for="collateral-amount">Valeur du Collatéral (unités) :</label>
-            <input type="range" id="collateral-amount" min="0" max="1000" step="0.01" value="16.19" oninput="updateCollateralValue(this.value)">
-            <span id="collateral-amount-display">16.19</span>
-            <p>Valeur totale : <span id="collateral-price">$1,376,150</span></p>
-            <label for="loan-duration">Durée du Prêt (mois) :</label>
-            <input type="range" id="loan-duration" min="1" max="36" step="1" value="12" oninput="updateLoanDuration(this.value)">
-            <span id="loan-duration-display">12</span>
-            <label for="interest-rate">Taux d’Intérêt Annuel (%) :</label>
-            <input type="range" id="interest-rate" min="0" max="20" step="0.1" value="5" oninput="updateInterestRate(this.value)">
-            <span id="interest-rate-display">5%</span>
-            <p>Ratio LTV : <span id="ltv-value" class="highlight">70%</span></p>
-            <button type="button" class="cta-button" onclick="nextStep(1)">Précédent</button>
-            <button type="button" class="cta-button" onclick="nextStep(3)">Suivant</button>
-        </div>
+                    <div class="step" id="step-2">
+                        <p>Type sélectionné : <span id="selected-collateral">WBTC</span> (Prix unitaire : <span id="collateral-unit-price">$85,000</span>)</p>
+                        <label for="collateral-amount">Valeur du Collatéral (unités) :</label>
+                        <input type="range" id="collateral-amount" min="0" max="1000" step="0.01" value="16.19" oninput="updateCollateralValue(this.value)">
+                        <span id="collateral-amount-display">16.19</span>
+                        <p>Valeur totale : <span id="collateral-price">$1,376,150</span></p>
+                        <label for="loan-duration">Durée du Prêt (mois) :</label>
+                        <input type="range" id="loan-duration" min="1" max="36" step="1" value="12" oninput="updateLoanDuration(this.value)">
+                        <span id="loan-duration-display">12</span>
+                        <label for="interest-rate">Taux d’Intérêt Annuel (%) :</label>
+                        <input type="range" id="interest-rate" min="0" max="20" step="0.1" value="5" oninput="updateInterestRate(this.value)">
+                        <span id="interest-rate-display">5%</span>
+                        <p>Ratio LTV : <span id="ltv-value" class="highlight">70%</span></p>
+                        <button type="button" class="cta-button" onclick="nextStep(1)">Précédent</button>
+                        <button type="button" class="cta-button" onclick="nextStep(3)">Suivant</button>
+                    </div>
 
-        <!-- Étape 3 : Résultats -->
-        <div class="step" id="step-3">
-            <div id="loan-results">
-                <p><strong>Montant du prêt (basé sur <span id="result-collateral">WBTC</span>) :</strong> <span id="loan-amount">$0</span></p>
-                <p><strong>Mensuel :</strong> <span id="monthly-payment">$0</span></p>
-                <p><strong>Intérêts :</strong> <span id="total-interest">$0</span></p>
-                <p><strong>Total :</strong> <span id="total-amount">$0</span></p>
-                <canvas id="loan-chart" style="max-height: 200px;"></canvas>
-            </div>
-            <button type="button" class="cta-button" onclick="nextStep(2)">Précédent</button>
-            <button type="button" onclick="requestLoan()" class="cta-button">Demander un prêt</button>
-            <button type="button" onclick="resetSimulator()" class="cta-button">Réinitialiser</button>
-        </div>
-    </form>
-</section>
+                    <div class="step" id="step-3">
+                        <div id="loan-results">
+                            <p><strong>Montant du prêt (basé sur <span id="result-collateral">WBTC</span>) :</strong> <span id="loan-amount">$0</span></p>
+                            <p><strong>Mensuel :</strong> <span id="monthly-payment">$0</span></p>
+                            <p><strong>Intérêts :</strong> <span id="total-interest">$0</span></p>
+                            <p><strong>Total :</strong> <span id="total-amount">$0</span></p>
+                            <canvas id="loan-chart" style="max-height: 200px;"></canvas>
+                        </div>
+                        <button type="button" class="cta-button" onclick="nextStep(2)">Précédent</button>
+                        <button type="button" onclick="requestLoan()" class="cta-button">Demander un prêt</button>
+                        <button type="button" onclick="resetSimulator()" class="cta-button">Réinitialiser</button>
+                    </div>
+                </form>
+            </section>
 
             <section class="section about">
                 <h2>À Propos de Legatio Finance</h2>
@@ -944,7 +917,7 @@
                     </article>
                     <article class="token-benefit">
                         <h3>Quels sont les risques ?</h3>
-                        <p>Les bonus varient selon l’activité ; audits CertiK assurent la sécurité..</p>
+                        <p>Les bonus varient selon l’activité ; audits CertiK assurent la sécurité.</p>
                     </article>
                     <article class="token-benefit">
                         <h3>Comment récupérer mes $LEGS ?</h3>
@@ -958,15 +931,15 @@
                 <p><a href="#faq">Qu’est-ce qu’un NFT Legatio ?</a> | <a href="#how-to-invest">Comment rejoindre Legatio ?</a></p>
             </section>
 
-           <section class="section investors" id="investors">
-  <h2>Pour l'Écosystème</h2>
-    <p>Participez à notre vision collective sur Arbitrum.</p>
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-        <a href="https://delmarcrypto.github.io/Pitch-Deck/" class="cta-button" target="_blank" rel="noopener noreferrer">Pitch Deck</a>
-        <a href="https://delmarcrypto.github.io/White-Paper/" class="cta-button" target="_blank" rel="noopener noreferrer">White Paper</a>
-        <a href="https://delmarcrypto.github.io/Business-Plan/" class="cta-button" target="_blank" rel="noopener noreferrer">Business Plan</a>
-    </div>
-</section>
+            <section class="section investors" id="investors">
+                <h2>Pour l'Écosystème</h2>
+                <p>Participez à notre vision collective sur Arbitrum.</p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://delmarcrypto.github.io/Pitch-Deck/" class="cta-button" target="_blank" rel="noopener noreferrer">Pitch Deck</a>
+                    <a href="https://delmarcrypto.github.io/White-Paper/" class="cta-button" target="_blank" rel="noopener noreferrer">White Paper</a>
+                    <a href="https://delmarcrypto.github.io/Business-Plan/" class="cta-button" target="_blank" rel="noopener noreferrer">Business Plan</a>
+                </div>
+            </section>
 
             <section class="section stay-informed">
                 <h2>Restez Informé</h2>
@@ -1012,104 +985,103 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
-    <script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js" defer></script>
     <script>
-        const contractAddress = "0x1234abcd..."; // Remplacez par l'adresse réelle
-        const contractABI = [
-            {
-                "inputs": [{"internalType": "address", "name": "_jetonCollatéral", "type": "address"}, {"internalType": "uint256", "name": "_montantCollatéral", "type": "uint256"}, {"internalType": "uint256", "name": "_montant", "type": "uint256"}],
-                "name": "ouvrirPret",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [{"internalType": "address", "name": "_utilisateur", "type": "address"}],
-                "name": "ajouterUtilisateurKYC",
-                "outputs": [],
-                "stateMutability": "nonpayable",
-                "type": "function"
-            },
-            {
-                "inputs": [{"internalType": "address", "name": "", "type": "address"}],
-                "name": "utilisateursKYC",
-                "outputs": [{"internalType": "bool", "name": "", "type": "bool"}],
-                "stateMutability": "view",
-                "type": "function"
-            }
-        ];
-
-        let provider, signer, contract, userAddress;
-        let livePrices = { bitcoin: 0, 'pax-gold': 0, 'silver-token-xagx': 0, immobilier: 1000 };
+        let provider, signer, userAddress;
+        let livePrices = { 
+            wbtc: 85000, 
+            eth: 5000, 
+            usdc: 1, 
+            paxg: 2600, 
+            rwa: 10000 
+        };
         let chart;
 
-    let livePrices = { 
-    wbtc: 85000, 
-    eth: 5000, 
-    usdc: 1, 
-    paxg: 2600, 
-    rwa: 10000 
-};
+        async function connectMetaMask(event) {
+            const buttonId = event.target.id;
+            const addressElement = buttonId === 'connect-metamask' ? 'wallet-address' : 'wallet-address-howto';
+            const errorElement = buttonId === 'connect-metamask' ? 'error-message' : 'error-message-howto';
 
-function updateCollateralValue(value) {
-    document.getElementById('collateral-amount-display').textContent = value;
-    updatePriceDisplay();
-}
+            if (!window.ethereum) {
+                document.getElementById(errorElement).textContent = 'MetaMask est requis.';
+                document.getElementById(errorElement).classList.remove('hidden');
+                return;
+            }
 
-function updateLoanDuration(value) {
-    document.getElementById('loan-duration-display').textContent = value;
-    calculateLoan();
-}
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                userAddress = accounts[0];
+                document.getElementById(addressElement).classList.remove('hidden');
+                document.getElementById(addressElement).textContent = `Adresse: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
 
-function updateInterestRate(value) {
-    document.getElementById('interest-rate-display').textContent = `${value}%`;
-    calculateLoan();
-}
+                provider = new ethers.providers.Web3Provider(window.ethereum);
+                signer = provider.getSigner();
 
-function updatePriceDisplay() {
-    const type = document.getElementById('collateral-type').value;
-    const unitPrice = livePrices[type];
-    const amount = parseFloat(document.getElementById('collateral-amount').value);
-    document.getElementById('collateral-unit-price').textContent = `$${unitPrice.toLocaleString('fr-FR')}`;
-    document.getElementById('selected-collateral').textContent = type.toUpperCase();
-    document.getElementById('result-collateral').textContent = type.toUpperCase();
-    document.getElementById('collateral-price').textContent = `$${(amount * unitPrice).toLocaleString('fr-FR')}`;
-    calculateLoan();
-}
+                if (await window.ethereum.request({ method: 'eth_chainId' }) !== '0xa4b1') {
+                    await window.ethereum.request({ 
+                        method: 'wallet_switchEthereumChain', 
+                        params: [{ chainId: '0xa4b1' }] 
+                    });
+                }
 
-function calculateLoan() {
-    const collateralAmount = parseFloat(document.getElementById('collateral-amount').value);
-    const type = document.getElementById('collateral-type').value;
-    const unitPrice = livePrices[type];
-    const duration = parseInt(document.getElementById('loan-duration').value);
-    const interestRate = parseFloat(document.getElementById('interest-rate').value) / 100;
-    const ltv = 0.7;
+                document.getElementById(buttonId).textContent = 'Connecté';
+                document.getElementById(buttonId).disabled = true;
+                document.getElementById(errorElement).textContent = '';
+            } catch (e) {
+                document.getElementById(errorElement).textContent = e.message || 'Erreur de connexion.';
+                document.getElementById(errorElement).classList.remove('hidden');
+            }
+        }
 
-    const collateralValue = collateralAmount * unitPrice;
-    const loanAmount = collateralValue * ltv;
-    const monthlyRate = interestRate / 12;
-    const monthlyPayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -duration));
-    const totalAmount = monthlyPayment * duration;
-    const totalInterest = totalAmount - loanAmount;
+        function updateCollateralValue(value) {
+            document.getElementById('collateral-amount-display').textContent = value;
+            updatePriceDisplay();
+        }
 
-    document.getElementById('loan-amount').textContent = `$${loanAmount.toLocaleString('fr-FR')}`;
-    document.getElementById('monthly-payment').textContent = `$${monthlyPayment.toLocaleString('fr-FR')}`;
-    document.getElementById('total-interest').textContent = `$${totalInterest.toLocaleString('fr-FR')}`;
-    document.getElementById('total-amount').textContent = `$${totalAmount.toLocaleString('fr-FR')}`;
+        function updateLoanDuration(value) {
+            document.getElementById('loan-duration-display').textContent = value;
+            calculateLoan();
+        }
 
-    updateChart(loanAmount, totalInterest);
-}
+        function updateInterestRate(value) {
+            document.getElementById('interest-rate-display').textContent = `${value}%`;
+            calculateLoan();
+        }
 
-document.getElementById('collateral-type').addEventListener('change', updatePriceDisplay);
-document.getElementById('collateral-amount').addEventListener('input', updatePriceDisplay);
-document.getElementById('loan-duration').addEventListener('input', updateLoanDuration);
-document.getElementById('interest-rate').addEventListener('input', updateInterestRate);
+        function updatePriceDisplay() {
+            const type = document.getElementById('collateral-type').value;
+            const unitPrice = livePrices[type];
+            const amount = parseFloat(document.getElementById('collateral-amount').value);
+            document.getElementById('collateral-unit-price').textContent = `$${unitPrice.toLocaleString('fr-FR')}`;
+            document.getElementById('selected-collateral').textContent = type.toUpperCase();
+            document.getElementById('result-collateral').textContent = type.toUpperCase();
+            document.getElementById('collateral-price').textContent = `$${(amount * unitPrice).toLocaleString('fr-FR')}`;
+            calculateLoan();
+        }
 
-// Fonctions existantes (nextStep, connectMetaMask, updateChart, etc.) restent inchangées
+        function calculateLoan() {
+            const collateralAmount = parseFloat(document.getElementById('collateral-amount').value);
+            const type = document.getElementById('collateral-type').value;
+            const unitPrice = livePrices[type];
+            const duration = parseInt(document.getElementById('loan-duration').value);
+            const interestRate = parseFloat(document.getElementById('interest-rate').value) / 100;
+            const ltv = 0.7;
 
-            // Mise à jour du graphique
+            const collateralValue = collateralAmount * unitPrice;
+            const loanAmount = collateralValue * ltv;
+            const monthlyRate = interestRate / 12;
+            const monthlyPayment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -duration));
+            const totalAmount = monthlyPayment * duration;
+            const totalInterest = totalAmount - loanAmount;
+
+            document.getElementById('loan-amount').textContent = `$${loanAmount.toLocaleString('fr-FR')}`;
+            document.getElementById('monthly-payment').textContent = `$${monthlyPayment.toLocaleString('fr-FR')}`;
+            document.getElementById('total-interest').textContent = `$${totalInterest.toLocaleString('fr-FR')}`;
+            document.getElementById('total-amount').textContent = `$${totalAmount.toLocaleString('fr-FR')}`;
+
+            updateChart(loanAmount, totalInterest);
+        }
+
+        function updateChart(loan, interest) {
             if (chart) chart.destroy();
             const ctx = document.getElementById('loan-chart').getContext('2d');
             chart = new Chart(ctx, {
@@ -1126,82 +1098,10 @@ document.getElementById('interest-rate').addEventListener('input', updateInteres
                 options: {
                     responsive: true,
                     plugins: {
-                        legend: {
-                            position: 'top',
-                            labels: {
-                                color: '#FFFFFF'
-                            }
-                        }
+                        legend: { position: 'top', labels: { color: '#FFFFFF' } }
                     }
                 }
             });
-        }
-
-        async function connectMetaMask() {
-            if (!window.ethereum) {
-                document.getElementById('error-message').textContent = 'MetaMask est requis.';
-                return;
-            }
-
-            try {
-                document.getElementById('loading-spinner').classList.remove('hidden');
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                userAddress = accounts[0];
-                document.getElementById('wallet-address').classList.remove('hidden');
-                document.getElementById('wallet-address').textContent = `Adresse: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`;
-
-                provider = new ethers.providers.Web3Provider(window.ethereum);
-                signer = provider.getSigner();
-                contract = new ethers.Contract(contractAddress, contractABI, signer);
-
-                if (await window.ethereum.request({ method: 'eth_chainId' }) !== '0xa4b1') {
-                    await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: '0xa4b1' }] });
-                }
-
-                const isKYC = await contract.utilisateursKYC(userAddress);
-                if (!isKYC) {
-                    document.getElementById('error-message').textContent = 'KYC requis.';
-                } else {
-                    document.getElementById('connect-metamask').textContent = 'Connecté';
-                    document.getElementById('error-message').textContent = '';
-                }
-            } catch (e) {
-                document.getElementById('error-message').textContent = e.message || 'Erreur de connexion.';
-            } finally {
-                document.getElementById('loading-spinner').classList.add('hidden');
-            }
-        }
-
-        async function swapLEG() {
-            if (!contract) {
-                alert('Connectez MetaMask d’abord !');
-                return;
-            }
-            const amount = document.getElementById('swap-amount').value;
-            if (!amount || amount <= 0) {
-                document.getElementById('swap-result').textContent = 'Veuillez entrer un montant valide.';
-                return;
-            }
-            document.getElementById('swap-result').textContent = `Échange de ${amount} ETH en cours...`;
-            // Ajoutez ici la logique réelle d'échange via le contrat
-        }
-
-        async function requestLoan() {
-            if (!contract) {
-                alert('Connectez MetaMask d’abord !');
-                return;
-            }
-            try {
-                const type = document.getElementById('collateral-type').value;
-                const amount = ethers.utils.parseUnits(document.getElementById('collateral-amount').value, 18);
-                const loan = ethers.utils.parseUnits(document.getElementById('loan-amount').textContent.replace('$', '').replace(/,/g, ''), 6);
-                const collateralMap = { bitcoin: "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f", 'pax-gold': "0x...", 'silver-token-xagx': "0x...", immobilier: "0x..." };
-                const tx = await contract.ouvrirPret(collateralMap[type], amount, loan);
-                await tx.wait();
-                document.getElementById('error-message').textContent = 'Prêt demandé avec succès !';
-            } catch (e) {
-                document.getElementById('error-message').textContent = e.message || 'Erreur lors de la demande.';
-            }
         }
 
         function nextStep(step) {
@@ -1213,23 +1113,34 @@ document.getElementById('interest-rate').addEventListener('input', updateInteres
         }
 
         function resetSimulator() {
-            document.getElementById('collateral-amount').value = 0;
-            document.getElementById('collateral-amount-display').textContent = '0';
+            document.getElementById('collateral-amount').value = 16.19;
+            document.getElementById('collateral-amount-display').textContent = '16.19';
             document.getElementById('loan-duration').value = 12;
             document.getElementById('loan-duration-display').textContent = '12';
             document.getElementById('interest-rate').value = 5;
             document.getElementById('interest-rate-display').textContent = '5%';
-            document.getElementById('collateral-type').value = 'bitcoin';
+            document.getElementById('collateral-type').value = 'wbtc';
             updatePriceDisplay();
             nextStep(1);
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            fetchLivePrices();
-            setInterval(fetchLivePrices, 60000);
+        async function requestLoan() {
+            if (!signer) {
+                document.getElementById('error-message').textContent = 'Connectez MetaMask d’abord !';
+                document.getElementById('error-message').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('error-message').textContent = 'Fonctionnalité en cours de développement.';
+            document.getElementById('error-message').classList.remove('hidden');
+        }
 
+        document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('connect-metamask').addEventListener('click', connectMetaMask);
+            document.getElementById('connect-metamask-howto').addEventListener('click', connectMetaMask);
             document.getElementById('collateral-type').addEventListener('change', updatePriceDisplay);
+            document.getElementById('collateral-amount').addEventListener('input', updatePriceDisplay);
+            document.getElementById('loan-duration').addEventListener('input', updateLoanDuration);
+            document.getElementById('interest-rate').addEventListener('input', updateInterestRate);
 
             document.querySelector('.back-to-top').addEventListener('click', (e) => {
                 e.preventDefault();
@@ -1237,10 +1148,6 @@ document.getElementById('interest-rate').addEventListener('input', updateInteres
             });
 
             const modal = document.getElementById('demo-modal');
-            document.getElementById('open-demo-modal').addEventListener('click', (e) => {
-                e.preventDefault();
-                modal.style.display = 'block';
-            });
             document.getElementById('close-demo-modal').addEventListener('click', () => {
                 modal.style.display = 'none';
             });
@@ -1268,6 +1175,8 @@ document.getElementById('interest-rate').addEventListener('input', updateInteres
                     document.getElementById('subscribe-message').textContent = 'Erreur réseau.';
                 }
             });
+
+            updatePriceDisplay(); // Initialiser le simulateur
         });
     </script>
 </body>
